@@ -1,0 +1,32 @@
+\section{Estimering}
+
+Med denne undersøkelsen ønsket vi å undersøke hvordan de betingede
+prediksjonsfordelingene oppfører seg. Derfor ble parametrene i modellene
+estimert med hele tidserien. Vi estimerte parametrene for hvert land til de to
+modellene med betinget maksimum likelihood (CML). For negativ binomialmodellen
+ble parametrene ble valgt slik at funksjonen
+
+$$
+\ell_{n_i}(a_i, b_i , c_i| Y_{i, 1}) = \sum_{t=2}^{n_i} \log(f(Y_{i,t}|a_i, b_i, c_i, Y_{i, t-1}))
+$$
+
+\noindent
+ble minimert. Funksjonen $f(\cdot)$ er 
+
+$$
+\mathrm{P}(Y=Y_{i,t}|a_i, b_i, c_i, Y_{i, t-1}),
+$$
+
+\noindent
+der $\mathrm{P}$ er gitt ved den betingede negativ binomialtetthetsfunksjonen.
+For lognormalmodellen ble funksjonen
+
+$$
+\ell_{n_i}(a_i, b_i , \sigma_i| Y_{i, 1}) = \sum_{t=2}^{n_i} \log(g(Y_{i,t}|a_i, b_i, \sigma_i, Y_{i, t-1}))
+$$
+
+\noindent
+minimert. Her er $g(\cdot)$ den negative logaritmen til tetthetsfunkjonen til
+normalfordelingen. Funksjonene ble minimert numerisk ved hjelp av
+\texttt{optim} funksjonen i R. For å sikre stabile estimater ble funskjonen
+kjørt 10 ganger, og paramtrene som ga lavest loglik-verdier ble valgt.

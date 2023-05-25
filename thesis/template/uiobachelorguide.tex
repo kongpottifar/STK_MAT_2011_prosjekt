@@ -1,0 +1,202 @@
+\documentclass[UKenglish,bachelor]{uiomaster}  %% ... or norsk or nynorsk or USenglish
+\usepackage[utf8]{inputenc}           %% ... or latin1
+\usepackage[T1]{url}\urlstyle{sf}
+\usepackage{babel, graphicx, textcomp, uiomasterfp}
+
+\title{The title of my thesis}        %% ... or whatever
+\subtitle{Any short subtitle}         %% ... if any
+\author{My Name}                      %% ... or whoever 
+
+%% Reference management
+\usepackage[backend=biber,
+    sortcites  = true,
+    giveninits = true,
+    %doi = false,
+    isbn = false,
+    url = true,
+    %sortlocale = nb_NO, %% ... known bug in biblatex - to be resolved
+    %sorting = none, %% ... will sort references in order of appearance
+    maxcitenames=1,
+    citestyle=numeric,
+    style=numeric]{biblatex} %% For alternatives, see https://www.overleaf.com/learn/latex/Bibtex_bibliography_styles The numeric-styles are common, but difficult to work with in a thesis because the numbers change as you add citations and the numbers do not reveal the source; consider using alphabetic instead - get automatic citekey-suggestions and less need for showkeys.
+ \DeclareNameAlias{sortname}{family-given} 
+\DeclareNameAlias{default}{family-given} %% ... Wiles, A. instead of A. Wiles. Useful if you sort references alphabetically.
+\addbibresource{bibliography.bib}            %% ... or whatever
+
+%% Cross references
+\usepackage{varioref}
+\usepackage[hidelinks]{hyperref}
+
+%% Div
+\usepackage{booktabs}           %% Nice tables
+\usepackage{csquotes}       %% Quotation marks, controlled by babel if \enquote
+
+%% Mathematics packages
+\usepackage{mathpreamble}           %% ... nice tools in mathematics
+
+\usepackage{microtype}              %% ... Extra layout package
+\microtypesetup{protrusion = false}
+
+\usepackage{kantlipsum}             %% ... Dummy text
+
+
+\begin{document}
+\uiomasterfp[dept={Department of Mathematics},  %% ... or your department
+  program={MAT2000 Project work in Mathematics},                        %% ... or your study program
+  supervisor={Terence Tao},                    %% ... or blank
+  % or supervisors={A Name\and B Name},     %% if more than one
+  bachelor,                                   %% ... or bachelor
+  %long=10,                                      %% ... or short
+  color=green]                                  %%... color options                                  
+
+
+\tableofcontents
+
+\begin{abstract}
+\noindent The abstract is a short summary of your content, say 200-300 words. Readers use the abstract to decide whether this is worth to read or not. This is why you should use these words cleverly: put the topic and your results in context quickly, lay claim to new results, with a short description of methods used, followed by conclusions. Avoid special characters and do not cite in the abstract.   
+\end{abstract}
+
+
+\section{Introduction}
+\label{intro}
+Zoom in on your problem. Mention how the problem has been studied earlier and cite \parencite{MMS22}. Give a sketch of what you plan to do in the project. 
+
+The introduction will most likely include some text that contains a claim that you need to support with a citation \cite[33--34]{AM69}. Include a page number, page numbers or numbered environment in the citation, unless you want to emphasize that you cite the entire work \cite[Theorem~1]{AM69}. It is always better to cite a published article than a preprint, but do not cite future work unless there is a preprint available. Web pages are usually not considered scientifically sound references, but sometimes references to URLs are necessary; to make your research as reliable as possible, add the date you visited the web page to the bibliography \cite{Bib15}.
+
+It is OK to postpone some notation to later sections, but you might want to reveal some of your results in the introduction as a teaser.
+
+The introduction is where you set the \enquote{feel} of the thesis. The style should be formal, so please avoid contractions as \enquote{don't} in formal writing. It should be written at least twice; before you start your project and the last thing you write before you hand it in. A useful exercise is to use the \enquote{And-But-Therefore}-trick when you write.
+
+Your text should be subdivided into sections, subsections, paragraphs and sentences to make it easier to read. Sections and subsections should be numbered. Paragraphs are separated from one another by indented first line (differs in different languages). A paragraph is build up by a claim, an argument or explanation, and finally a conclusion. Use complete, but short sentences. Break up sentences into smaller units. Note that mathematics is usually presented inside a sentence. This will make it easier to read your text.
+
+\begin{remark}
+Important remarks can be put in a separate environment. It is considered a cardinal sin to start a sentence with a mathematical symbol or end without proper punctuation, even when you display a formula, see \vref{eq:integration}. 
+\end{remark}
+
+Always remember that your goal is to make the reader understand. This means that your task as the author is to minimize what the reader must keep in mind at one time. Writing that frees up memory in the reader's brain is a blessing.
+
+It helps the reader to get an outline of the project in the introduction. Use clickable cross references for smarter reading, see \cref{results}.
+
+\section{Background and notation}        %% ... or ??
+When we communicate mathematics we must be very precise, concise and focused. This means that we must be very careful about our choice of words. Moreover, we often use abstract notation in the form of symbols as a tool to acheive this.
+
+There are two golden rules for when we use symbols.
+\begin{enumerate}
+    \item Don't define two symbols for the same object.
+    \item Don't use the same symbol for two different objects.
+\end{enumerate}
+
+\noindent Other important points when it comes to notation are:
+\begin{itemize}
+    \item use standard notation ($f,g,h$ for functions),
+    \item decorate with hats $\hat{a}$, curls $\tilde{a}$, super- and subscripts $a_i^j$,
+    \item avoid the christmas tree $\hat{a}_{i,k}^j$,
+    \item if you work with complex numbers, don't count with $i$.
+    \item do not use logical symbols like $\forall$ unless you write a project in formal logic.
+\end{itemize}
+
+Minimize the distance between the notation/definition and the first use of the notation/definition. 
+
+Definitions can be introduced on the fly by emphasizing the \emph{name of the object}. If you have an essential or new definition, it might be useful to put it in a separate environment.
+
+\begin{definition}
+An \enquote{if} in a definition always means \enquote{if and only if}. Do not use the abbreviation \enquote{iff}; Like most abbreviations, it is reserved for blackboard presentations to save time.
+\end{definition}
+
+Definitions are just one kind of environment; theorems, propositions, lemmas, corollaries etc. are others. They should be numbered continuously for later cross references (and citations!); do not refer to a theorem by its position in the document, and only famous theorems by their name.
+
+Please note that mathematics should be thought of, read as and written as part of a sentence. It could be inline like $x=2$ or displayed on a separate line in an equation environment or with display style in math mode. For instance we have that
+\begin{equation}
+    \iint_D \dd x \diff y dxdy
+    =
+    \int_0^{2\pi} \int_0^t \rho \diff \rho \diff t
+    =
+    \frac{4}{3} \pi^3,
+    \label{eq:integration}
+\end{equation}
+which could also be written in display style as 
+\[\iint_D \dd x \diff y
+    =
+    \int_0^{2\pi} \int_0^t \rho \diff \rho \diff t
+    =
+    \frac{4}{3} \pi^3.\]
+You can cleverly refer to your equation with \texttt{\textbackslash cref}: \cref{{eq:integration}}. 
+
+Letters in math mode will always be in math font, so you must specify text; $x=2 and x=3$ is different from $x=2 \text{ and } x=3$. However, some mathematical objects have an upright font, for example $\sin{x}$ or $\ln{x}$, and notice the differential $\dd{x}$ vs. $dx$. You may define such operators yourself in the preable using \texttt{DeclareMathOperator}.
+
+Furthermore, there are a lot of unspoken rules when it comes to presenting mathematics. Some advocate for the use of $x^{2/3}$ over $x^{\tfrac{2}{3}}$, where the line spacing is adjusted by \LaTeX in the latter case. If an expression creates extra line spacing, then use display style;
+\begin{equation}
+  L' = {L}{\sqrt{1-\frac{v^2}{c^2}}}.
+ \end{equation}
+
+Multiplication of variables is usually written without a visible dot, and $ab$ means $a\cdot b$, while multiplication of numbers requires this dot: $2\cdot3$. The use of parenthesis is a science in itself, with rules for nesting. Adjusting height to the height of the content inside the parenthesis is crucial for a professional look. Compare
+\[ 
+F = G \left( \frac{m_1 m_2}{r^2} \right) = G ( \frac{m_1 m_2}{r^2}).
+\]
+Ask your supervisor and look at canonical text books and articles from your field.
+
+
+\section{Results}  %% ... or ??
+\label{results}
+This is the section where you state and prove your main results in a rigorous way. Make a cross reference to another section if necessary \cref{intro}.
+
+A mathematical text needs transitional words, sentences or paragraphs. Therefore, we often write an introductory text before we state a theorem. Say why you need to state the theorem and where it is from \cite[Theorem~1]{Mao19}. 
+
+\begin{theorem}[Pythagoras]
+    \label{thm:pythagoras}
+In a right-angled triangle where the lengths of the sides are $a$, $b$ and $c$ respectively, with $a > b > c$, we have that
+    \begin{align}
+        \label{eq:pythagoras}
+            a^2 + b^2 = c^2.
+    \end{align}
+\end{theorem}
+
+In other words, \cref{thm:pythagoras} says that the square on the side opposite the right angle equals the sum of the squares on the sides containing the right angle. There are many proofs of this result, see \cite{Mao19}. Notice that we define the variables before they are needed. Sometimes it is inevitable to declare the variables after they have been used, but try to avoid it.
+
+ We now give a proof of \cref{thm:pythagoras} where we adapt the geometric proof by Euklid given in \cite[35]{Mao19}.
+
+\begin{proof}
+Describe the type of proof; e.g., direct, contrapositive, by contradiction, algebraic, geometric. Give a short sketch of the proof to clarify steps. Use transitional words like first, second and finally. Indicate where you use the hypotheses in the theorem. 
+
+If you are told to include a proof from a text book or article by your supervisor, make sure you make it your own: Rewrite the structure, add detail and rewrite it in your own words to make it your own. Notice the square that ends the proof.
+
+If you instead of a proof say that \enquote{it is easy to see that}, then you have stated a corollary, not a theorem. Moreover, using such phrases shows is disrespectful to your reader and is quite demotivating for a younger reader and annoying for a professor. 
+\end{proof}
+
+\subsection{Figures and tables}
+In this section you can see examples of tables and figures. \Cref{tab:tall} lists Pythagorean triples; i.e., triples of integers that satisfy \cref{eq:pythagoras} in \cref{thm:pythagoras}. It is made with the booktabs-package, which is the canonical way of making tables in \LaTeX. Notice the capital first letter in the environment that is referred to. 
+
+\begin{table}[htbp]
+    \caption{Examples of triples of integers that satisfy \cref{eq:pythagoras}. The caption has a slightly smaller font and is placed above the table.}
+    \centering
+    \begin{tabular}{@{}ccc@{}}
+        \toprule
+        \(\boldsymbol{a}\) & \(\boldsymbol{b}\) & \(\boldsymbol{c}\)
+        \\
+        \midrule
+        3 & 4 & 5
+        \\
+        65 & 72 & 97
+        \\
+        \bottomrule
+    \end{tabular}
+    \label{tab:tall}
+\end{table}
+
+All tables and figures are floats that \LaTeX will place at a perfect place in your document. Do not override this unless the float creates unnatural page breaks or moves to another section. 
+
+All tables and figures must be refered to in the text with cross references \cref{figure}. Although the caption of a figure should explain it to the impatient reader who only looks at your figures, the figure should be linked to the body text and explained properly there too. 
+
+\begin{figure}[htbp] %% order gives preferred placement
+\label{figure}
+    \centering
+    \includegraphics[width=5cm]{uio-fp-segl}
+    \caption[The Apollon seal (to appear in LOF)]{The Apollon seal - and the caption in a slightly smaller font goes underneath the figure. This could be a complete description of the figure in several sentences.}
+\end{figure}
+
+\section{Conclusion}  
+Put your results in context. Mention strengths and weaknesses, and point to future research. Think of this part as framing your research and zooming out.
+
+Proof read your project! This involves using a spell checker, manually checking words that are not picked up by a spell checker (to vs. too vs. two), grammar, formulae, computations, punctuation and parenthesis.
+\printbibliography{}
+\end{document}

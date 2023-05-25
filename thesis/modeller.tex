@@ -1,0 +1,155 @@
+\section{Modellering}
+
+Vi har valgt å sammenligne negativ-binomialfordelingen og lognormalfordelingen
+som grunnlag estimere antall dødsfall en uke fram i tid. Vi vil ta utgangspunkt
+i en tidseriemodell som estimerer antall dødsfall i uke $t$ ut fra antall
+dødsfall i uke $t-1$. 
+
+En modell som er sentral i tidsserieanalyse er den autoregressive modellen (AR).
+Modellen legger til grunn at det finnes korrelasjon mellom observasjonene i
+en tidsserie. Ved å bruke korrelasjonen kan man prøve å estimere
+sannsynligheten for fremtidige utfall av verdier i tidsserien. Antall verdier
+fra tidsserien man inkluderer avgjør hvilken orden modellen har. I dette
+tilfellet bruker vi observasjonene fra forrige tidssteg $t-1$ i modellen, så
+det blir en 1. ordens autoregressiv modell (AR(1)). En standard AR(1)-modell
+for kontinuerlig responsvariabel er formulert ved  
+
+$$
+Y_t|Y_{t-1} = a + bY_{t-1} + \epsilon_t,
+$$
+
+\noindent
+der $a \in \mathbb{R}$, $0 < |b| <1$, og $\epsilon_t$ er feilen ved uke $t$.
+Vider antar man at $\epsilon_t$ er en tilfeldig variable som er normalfordelt
+med forventning 0 og standardavvik $\sigma$. For at AR(1)-modellen skal være
+stasjonær kreves det at $b$-parameteren er begrenset til $|b| < 1$. At modellen
+er stasjonær betyr at det finnes en marginal sannsynlighetsfordeling over $Y$
+når $t \to \infty$. Hvis $|b| > 1$ vil modellen beskrive en tidsserie som er
+ustabil og som kan vokse ubegrenset. 
+
+Siden vi skal beskrive dødsfall, som er ikke negative heltall er det nødvendig
+å gjøre noen modifikasjoner for å kunne bruke en AR(1)-modell. Det ene man kan
+gjøre er å transformere responsvariabelen slik at den er representert som et
+rasjonelt tall, vanligvis er det gjort ved å ta logaritmen til variabelen. En
+annen metode er å finne forventningen betinget på observasjoner ved $t-1$ og så
+finne en heltallsfordeling som beskriver observasjonene ved tid $t$ gitt
+observasjonene ved tid $t-1$ \parencite[73]{weiss2018introduction}. For vårt eksempel vil den betingede forventningen
+være 
+
+$$
+M_t|Y_{t-1} = a +bY_{t-1}.
+$$
+
+\noindent
+Så lar man $Y_t ~ F(M_t)$ der $F$ er en heltallsfordeling. Hvis $F$ er
+Poisson-fordelingen blir  
+
+$$
+Y_t|Y_{t-1} \sim \mathrm{Poi}(M_t|Y_{t-1}).
+$$
+
+\noindent
+
+
+
+\subsection{Negativ binomial}
+
+Den første modellen vi skal se på er en modell tilpasset heltallstidsserier med
+overspredning. Modellen er beskrevet av \cite{xu2012model} og er en Negative
+Binomial Dispersed Integer Auto Regressive Conditional Heteroscedasity-modell
+(NB-DINARCH). Modellene blir referert til som NB-modellen i resten av oppgaven.
+Ved å bruke negativ-binomialfordelingen har man mulighet til å modellere data
+med overvekt av 0-verdier og overspredning. Dette er i motsetning til en modell
+basert på Poisonnfordelingen, hvor den betingede variansen er lik den betingede
+forventningen. La $Y_{i, t} \in \mathbb{N}_0$ være antall dødsfall i land $i$ i
+uke $t$. Videre er den betingede forventningen
+
+$$
+M_{i, t}|Y_{i,t} = a_i + b_iY_{i,t-1},
+$$
+
+\noindent
+hvor $a > 0$ og $0 < b < 1$. Da er modellen definert av
+
+$$
+Y_{i,t}|Y_{i, t-1} \sim 
+\mathrm{NB}\left(c(M_{i,t}|Y_{i, t-1}), \frac{c}{c+1}\right),
+$$
+
+\noindent
+hvor $c >0$. Forventningen til $Y_{i,t}|Y_{i,t-1}$ blir
+
+$$
+\mathrm{E}[Y_{i,t}|Y_{i,t-1}] = a + bY_{i,t-1}.
+$$
+
+\noindent
+Variansen blir
+
+$$
+\mathrm{Var}(Y_{i,t}|Y_{i,t-1}) = \frac{(a + bY_{i,t-1})(c + 1)}{c}.
+$$
+
+\noindent
+Parameteren $a$ blir en grunnrate i antall dødsfall pr uke. Parameteren $b$ er
+en skaleringsfaktor som sier noe om hvor sterk sammenheng det er mellom dødsfall
+i en uke til den neste. Parameteren $c$ påvirker spredningen til fordelingen.
+Her ser man at forventningen er uavhengig spredningsparameteren $c$. Derimot
+varierer variasjonen med forventningen. Dette gjør at modellen kan beskrive
+populasjoner med både høye og lave forventninger. Vi kan og så se at variansen
+går mot forventningen når $c \to \infty$, det vil si en Poisson-fordeling med
+forventning og varians $M_{i,t}$. Modellen er dermed egnet til å beskrive
+populasjoner med overspredning, da variansen kan anta verdier fra $M_{i,t}$
+til $\infty$.
+
+\subsection{Lognormal}
+
+Den andre fordelingen vi skal bruke er lognormalfordelingen. Motivasjonen for å
+bruke denne fordelingen i modelleringen er at man får redusert
+heteroskedasiteten når verdiene er på den logaritmiske skalaen. En annen grunn
+til å operere på logaritmisk skala er at modelleringen kan bli enklere. En anne
+grunn er at ikke negative heltall er transformert til å være rasjonale tall. Da
+kan modelleringen bli enklere og man kan bruke for eksempel en standard
+AR(1)-modell.
+
+Hvis $Y_{i,t}$ er antall dødsfall i land $i$ i uke $t$ definer vi den transformerte variabelen
+
+$$
+Z_{i,t} = \log(Y_{i,t} + 1).
+$$
+\noindent
+Vi tar logaritmen av $Y_{i,t} + 1$ for at omgå at man tar $\log(0)$. Videre antar vi da at
+
+$$
+Z_{i,t}|Z_{i,t-1} = a_i + b_iZ_{i,t-1} + \epsilon_{i,t},
+$$
+
+\noindent
+der $\epsilon_{i,t} \sim \mathrm{N}(0, \sigma_i)$.  Her er $a_i > 0$, $0 < b_i
+< 1$ og $\sigma_i > 0$. Parameteren $a_i$ grunnraten til $Z_{i,t}$. Parameteren
+$b_i$ er beskriver sammenhengen mellom $Z_{i, t-1}$ og $Z_{i,t}$. Parameteren
+$\sigma_i$ beskriver standardavviket til $\epsilon_{i, t}$. Forventningen til
+$Z_{i,t}|Z_{i,t-1}$ er
+
+$$
+Z_{i,t}|Z_{i,t-1} = a_i + b_iZ_{t-1}
+$$
+
+\noindent
+og variansen er $\sigma_{i}^2$. Videre er forventningen til $Y_{i,t}|Z_{i,t-1}$
+
+$$
+\mathrm{E}[Y_{i,t}|Z_{i,t-1}] = e^{a_i +b_iZ_{t-1} \frac{\sigma_i^2}{2}} - 1.
+$$
+
+Variansen til $Y_{i,t}|Z_{i,t-1}$ er
+
+$$
+\mathrm{Var}(Y_t|Z_{i,t-1}) = (e^{\sigma_i^2}-1)e^{2(a_i+b_iZ_{i,t-1}) + \sigma_i^2}.
+$$
+
+En detalj å legge merke til  er at $\mathrm{E}[Y_{i,t}|Y_{i,t-1}]$ er avhengig
+av spredningsparameteren $\sigma$. Selv om man på lognormalskalaen kan
+modellere data med lav forventning og høy varians, vil forventningen på
+originalskalaen øke med variansen. 
+

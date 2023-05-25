@@ -1,0 +1,99 @@
+\documentclass[norsk, bachelor, final]{uiomaster}  %% ... or norsk or nynorsk or USenglish
+%% use option final to remove marginal notes
+\usepackage[utf8]{inputenc}           %% ... or latin1
+\usepackage[T1]{url}\urlstyle{sf}
+\usepackage{babel, graphicx, textcomp, uiomasterfp, dsfont}
+
+\title{Sammenligning av to tidsseriemodeller for prediksjon av dødsfall i borgerkrig}        %% ... or whatever
+%\subtitle{}         %% ... if any
+\author{Stephan Sæbø}                      %% ... or whoever 
+
+%% Reference management
+\usepackage[backend=biber,
+    sortcites  = true,
+    giveninits = true,
+    %doi = false,
+    isbn = false,
+    url = true,
+    %sortlocale = nb_NO, %% ... known bug in biblatex - to be resolved
+    %sorting = none, %% ... will sort references in order of appearance
+    maxcitenames=2,
+    citestyle=authoryear,
+    style=authoryear]{biblatex} %% For alternatives, see https://www.overleaf.com/learn/latex/Bibtex_bibliography_styles The numeric-styles are common, but difficult to work with in a thesis because the numbers change as you add citations and the numbers do not reveal the source; consider using alphabetic instead - get automatic citekey-suggestions and less need for showkeys.
+\DeclareNameAlias{sortname}{family-given} 
+\DeclareNameAlias{default}{family-given} %% ... Wiles, A. instead of A. Wiles. Useful if you sort references alphabetically.
+\addbibresource{bibliography.bib}            %% ... or whatever
+
+%% Cross references
+\usepackage{varioref}
+\usepackage[hidelinks]{hyperref}
+
+%% Div
+\usepackage{booktabs}           %% Nice tables
+\usepackage{csquotes}       %% Quotation marks, controlled by babel if \enquote
+
+%% Mathematics packages
+\usepackage{mathpreamble}           %% ... nice tools in mathematics
+
+\usepackage{microtype}              %% ... Extra layout package
+\microtypesetup{protrusion = false}
+
+\usepackage{kantlipsum}             %% ... Dummy text
+
+%% Egne kommandoer
+%% Lager parentes rundt år i \cite
+\newcommand{\citep}[1]{\citeauthor*{#1}~(\citeyear{#1})}
+
+%% Ekstra mellomrom i bibliografien
+\setlength\bibitemsep{0.5\baselineskip}
+
+\begin{document}
+\uiomasterfp[dept={Department of Mathematics},  %% ... or your department
+  program={STK-MAT2011 – Prosjektarbeid i finans, forsikring, risiko og dataanalyse},                        %% ... or your study program
+  supervisor={Gudmund Hermansen},                    %% ... or blank
+  % or supervisors={A Name\and B Name},     %% if more than one
+  bachelor,                                   %% ... or bachelor
+  %long=10,                                      %% ... or short
+  color=green]                                  %%... color options                                  
+
+
+%% \tableofcontents
+
+\begin{abstract}
+    Med økt tilgjengelighet av data på tap av menneskeliv kan det være nyttig å
+    se på hvordan man kan predikere dødsfall fram i tid. Her bruker vi data fra
+    Uppsala Conflict Data Program til å undersøke to tidsseriemodeller for å
+    prediker antall dødsfall i borgerkrig. De to modellene baser seg på
+    lognormalfordelingen og negativ-binomialfordelingen. Vi fant at modellen
+    basert på lognormalfordlingen hadde noe mer nøyaktige estimater på antall
+    dødsfall en e modellen basert på negativ-binomialfordelingen. Negativ
+    binomial-fordelingen var imidlertid bedre til å beskrive fordelingen av de
+    observerte data.  
+\end{abstract}
+
+
+\input{../introduksjon.tex}
+
+\input{../bakgrunn.tex}
+
+\input{../modeller.tex}
+
+\input{../estimering.tex}
+
+\input{../evaluering.tex}
+
+\input{../resultater.tex}
+
+\input{../konklusjon.tex}
+
+
+\clearpage
+
+\printbibliography{}
+
+\section*{Vedlegg}
+
+All kode for databehandling, generere figurer og tabeller kan lastes ned fra 
+\url{https://github.com/kongpottifar/STK_MAT_2011_prosjekt}
+
+\end{document}
